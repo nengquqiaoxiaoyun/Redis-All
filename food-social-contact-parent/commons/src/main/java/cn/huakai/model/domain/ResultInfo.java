@@ -24,4 +24,11 @@ public class ResultInfo<T> implements Serializable {
     @ApiModelProperty(value = "返回数据对象")
     private T data;
 
+    public ResultInfo(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public ResultInfo() {
+    }
 }

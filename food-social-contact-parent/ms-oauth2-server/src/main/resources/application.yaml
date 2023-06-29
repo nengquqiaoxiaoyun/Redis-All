@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8082 # 端口
 
 spring:
   application:
-    name: ms-diners # 应用名
+    name: ms-oauth2-server # 应用名
   # 数据库
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -15,23 +15,28 @@ spring:
     port: 6379
     host: 192.168.127.131
     timeout: 3000
+    database: 1
   # swagger
   swagger:
-    base-package: com.imooc.diners
+    base-package: cn.huakai.oauth2
     title: 慕课美食社交食客API接口文档
 
-# Oauth2 客户端信息
-oauth2:
-  client:
-    client-id: appId
-    secret: 123456
-    grant_type: password
-    scope: api
-
-# oauth2 服务地址
-service:
-  name:
-    ms-oauth-server: http://ms-oauth2-server/
+# Oauth2
+client:
+  oauth2:
+    client-id: appId # 客户端标识 ID
+    secret: 123456 # 客户端安全码
+    # 授权类型
+    grant_types:
+      - password
+      - refresh_token
+    # token 有效时间，单位秒
+    token-validity-time: 3600
+    refresh-token-validity-time: 3600
+    # 客户端访问范围
+    scopes:
+      - api
+      - all
 
 # 配置 Eureka Server 注册中心
 eureka:
@@ -42,7 +47,18 @@ eureka:
     service-url:
       defaultZone: http://localhost:8080/eureka/
 
+# Mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰映射
+
+# 指标监控健康检查
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*" # 暴露的端点
+
 logging:
   pattern:
     console: '%d{HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n'
-
