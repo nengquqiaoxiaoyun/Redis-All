@@ -1,10 +1,11 @@
 package cn.huakai.controller;
 
 import cn.huakai.model.domain.ResultInfo;
+import cn.huakai.model.dto.DinersDTO;
 import cn.huakai.service.DinersService;
+import cn.huakai.utils.ResultInfoUtil;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,31 @@ public class DinersController {
     @GetMapping("signin")
     public ResultInfo signIn(String account, String password) {
         return dinersService.signIn(account, password, request.getServletPath());
+    }
+
+
+    @GetMapping("sendVerifyCode")
+    public ResultInfo sendVerifyCode(String phone) {
+        dinersService.sendVerifyCode(phone);
+        return ResultInfoUtil.buildSuccess("发送成功", request.getServletPath());
+    }
+
+
+    @PostMapping("register")
+    public ResultInfo register(@RequestBody DinersDTO dinersDTO) {
+        return dinersService.register(dinersDTO, request.getServletPath());
+    }
+
+    /**
+     * 校验手机号是否已注册
+     *
+     * @param phone
+     * @return
+     */
+    @GetMapping("checkPhone")
+    public ResultInfo checkPhone(String phone) {
+        dinersService.checkPhoneIsRegistered(phone);
+        return ResultInfoUtil.buildSuccess(request.getServletPath());
     }
 
 }

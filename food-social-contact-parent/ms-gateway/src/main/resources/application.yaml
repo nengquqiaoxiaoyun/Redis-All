@@ -25,6 +25,15 @@ spring:
           filters:
             - StripPrefix=1
 
+secure:
+  ignore:
+    urls: # 配置白名单路径
+      - /actuator/**
+      - /auth/oauth/**
+      - /diners/signin
+      - /diners/sendVerifyCode
+      - /diners/register
+
 
 # 配置 Eureka Server 注册中心
 eureka:

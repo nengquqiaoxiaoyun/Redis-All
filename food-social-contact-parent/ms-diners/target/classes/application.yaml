@@ -20,6 +20,11 @@ spring:
     base-package: com.imooc.diners
     title: 慕课美食社交食客API接口文档
 
+# Mybatis
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰映射
+
 # Oauth2 客户端信息
 oauth2:
   client:
